@@ -7,8 +7,13 @@ This template can be used to quickly scaffold a Drupal project (module, theme, p
 ### Gather information
 1. Visit the project page for the selected project on Drupal.org
 1. Note the most recent D8 or D9 dev version of the project (usually found under "Releases", in the format of "8.x-1.x-dev, or "3.2.x-dev")
+   Look for a line like "Development version: 2.0.x-dev updated 26 Apr 2022 at 10:58 UTC".
 1. Make a note of the machine name of the project (listed after `https://www.drupal.org/project/` in the page URL).
 1. Make a note of the Human Readable project name, which is the displayed name of the project on the page, below the tabbed menu which is directly below "Download & Extend".
+
+You will need the name, machine name, and dev version in the
+[Customize your repository](#customize-your-repository)
+steps below.
 
 ### Create your repository
 
@@ -26,6 +31,9 @@ Do not use `ddev composer`.
 1. Remove the line `drupal/project_name` from `composer.json` but save it.
 1. Run the command `composer install`.
 1. Restore the line you removed in Step 1.
+1. Run the command `composer show --all drupal/project_name`. The `versions`
+   line shows the available branches and tags. One of these should match the
+  "dev version" you noted above. You may have to strip `8.x-`.
 1. Run the command `composer create-project` and enter the project name, machine
    name, and branch that you noted above.
 1. Review the changes made by that command.
