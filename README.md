@@ -23,6 +23,9 @@ This template can be used to quickly scaffold a Drupal project (module, theme, p
 Prerequisite: you need PHP and Composer installed locally.
 Do not use `ddev composer`.
 
+1. Remove the line `drupal/project_name` from `composer.json` but save it.
+1. Run the command `composer install`.
+1. Restore the line you removed in Step 1.
 1. Run the command `composer create-project` and enter the project name, machine
    name, and branch that you noted above.
 1. Review the changes made by that command.
