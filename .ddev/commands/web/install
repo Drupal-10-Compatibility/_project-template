@@ -9,7 +9,7 @@ echo "Composer packages are installed"
 
 echo "Running site installation."
 drush -y si standard || exit 1;
-drush -y en $PROJECT_NAME || exit 1;
+drush -y en $PROJECT_NAME upgrade_status || exit 1;
 echo "Site installation is finished"
 
 drush uli

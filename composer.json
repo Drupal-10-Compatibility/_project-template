@@ -1,9 +1,9 @@
 {
-    "name": "drupal-10-compatibility/<project_name>",
-    "description": "Drupal 10 Compatibility:  <human readable project name>",
+    "name": "drupal-10-compatibility/project_name",
+    "description": "Drupal 10 Compatibility:  project_label",
     "type": "project",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://www.drupal.org/project/<project_name>",
+    "homepage": "https://www.drupal.org/project/project_name",
     "repositories": [
         {
             "type": "composer",
@@ -20,6 +20,8 @@
         "drupal/core": "9.5.x-dev",
         "drupal/core-composer-scaffold": "9.5.x-dev",
         "drupal/core-recommended": "9.5.x-dev",
+        "drupal/project_name": "^1.0.0",
+        "drupal/upgrade_status": "^3.14",
         "drush/drush": "^11.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "wikimedia/composer-merge-plugin": "^2.0"
@@ -114,7 +116,17 @@
         "patches": {
         }
     },
+    "autoload": {
+        "psr-4": {
+            "Drupal10\\": "src/"
+        }
+    },
     "scripts": {
+        "post-create-project-cmd": [
+            "@putenv SHELL_INTERACTIVE=1",
+            "Drupal10\\ComposerScripts::interactiveConfiguration",
+            "@composer update"
+        ],
         "post-install-cmd": [],
         "post-update-cmd": []
     }
