@@ -37,6 +37,7 @@ Do not use `ddev composer`.
 1. Run the command `composer create-project` and enter the project name, machine
    name, and branch that you noted above.
 1. Review the changes made by that command.
+1. Test running the project with DDev: `ddev start` and `ddev install`.
 1. Commit all changes to the files in the project to the repository, and push up your changes.
 1. You're all set and ready to go.  Github actions will run coding standards checks, static analysis for deprecations, and execute any unit tests that the project has in it's codebase.
 1. Work on code remediation in the form of patches until all Github Actions jobs execute successfully.
