@@ -1,6 +1,7 @@
 .editorconfig
 .gitattributes
 composer.lock
-/docroot
+/web
 /vendor
-/.ddev/*.example
+/.ddev
+!/.ddev/config.yaml

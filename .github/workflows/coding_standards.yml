@@ -18,7 +18,7 @@ jobs:
       SIMPLETEST_DB: mysql://root:root@127.0.0.1:3306/<project_name>
       SIMPLETEST_BASE_URL: http://localhost:8888
       PROJECT_ROOT: .
-      DRUPAL_ROOT: ./docroot
+      DRUPAL_ROOT: ./web
       PHP_VERSION: '8.1'
     steps:
       - uses: actions/checkout@v2
@@ -44,4 +44,4 @@ jobs:
         run: composer update
       # Install Drupal for deprecation checking purposes
       - name: Check for Drupal Coding Standards
-        run: $(pwd)/vendor/bin/phpcs -p docroot/modules/contrib/${{ env.MODULE }}
+        run: $(pwd)/vendor/bin/phpcs -p ${{ env.DRUPAL_ROOT }}/modules/contrib/${{ env.MODULE }}

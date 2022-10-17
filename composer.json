@@ -65,14 +65,14 @@
                 "[web-root]/web.config": false
             },
             "initial": {
-                "sites/default/default.services.yml": "docroot/sites/default/default.services.yml",
-                "sites/default/default.settings.php": "docroot/sites/default/default.settings.php",
-                "robots.txt": "docroot/robots.txt",
-                ".htaccess": "docroot/.htaccess"
+                "sites/default/default.services.yml": "web/sites/default/default.services.yml",
+                "sites/default/default.settings.php": "web/sites/default/default.settings.php",
+                "robots.txt": "web/robots.txt",
+                ".htaccess": "web/.htaccess"
             },
             "omit-defaults": true,
             "locations": {
-                "web-root": "docroot/"
+                "web-root": "web/"
             }
         },
         "installer-types": [
@@ -81,28 +81,28 @@
             "npm-asset"
         ],
         "installer-paths": {
-            "docroot/core": [
+            "web/core": [
                 "type:drupal-core"
             ],
-            "docroot/modules/contrib/{$name}": [
+            "web/modules/contrib/{$name}": [
                 "type:drupal-module"
             ],
-            "docroot/profiles/contrib/{$name}": [
+            "web/profiles/contrib/{$name}": [
                 "type:drupal-profile"
             ],
-            "docroot/themes/contrib/{$name}": [
+            "web/themes/contrib/{$name}": [
                 "type:drupal-theme"
             ],
             "drush/Commands/contrib/{$name}": [
                 "type:drupal-drush"
             ],
-            "docroot/modules/custom/{$name}": [
+            "web/modules/custom/{$name}": [
                 "type:drupal-custom-module"
             ],
-            "docroot/themes/custom/{$name}": [
+            "web/themes/custom/{$name}": [
                 "type:drupal-custom-theme"
             ],
-            "docroot/libraries/{$name}": [
+            "web/libraries/{$name}": [
                 "type:drupal-library",
                 "type:npm-asset",
                 "type:bower-asset"
@@ -112,9 +112,6 @@
             "drupal/core": "-p2"
         },
         "patches": {
-            "drush/drush": {
-                "#5072: Replace Deprecated function call to module_load_include()": "https://github.com/drush-ops/drush/commit/0453692b51d7e43819d516b4b746feeb881ba519.diff"
-            }
         }
     },
     "scripts": {

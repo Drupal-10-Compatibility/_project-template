@@ -18,7 +18,7 @@ jobs:
       SIMPLETEST_DB: mysql://root:root@127.0.0.1:3306/<project_name>
       SIMPLETEST_BASE_URL: http://localhost:8888
       PROJECT_ROOT: .
-      DRUPAL_ROOT: ./docroot
+      DRUPAL_ROOT: ./web
       PHP_VERSION: '8.1'
     steps:
       - uses: actions/checkout@v2
@@ -58,4 +58,4 @@ jobs:
         run: composer update
       # Testing out phpstan-drupl for deprecation checking
       - name: Deprecation check with PHPStan / PHPStan Drupal
-        run: ./vendor/bin/phpstan analyze --memory-limit 1G docroot/modules/contrib/${{ env.MODULE }}
+        run: ./vendor/bin/phpstan analyze --memory-limit 1G ${{ env.DRUPAL_ROOT }}/modules/contrib/${{ env.MODULE }}

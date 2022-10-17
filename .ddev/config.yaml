@@ -1,6 +1,6 @@
 name: <project_name>
 type: drupal9
-docroot: docroot
+docroot: web
 php_version: "7.4"
 webserver_type: nginx-fpm
 router_http_port: "80"

@@ -18,7 +18,7 @@ jobs:
       SIMPLETEST_DB: mysql://root:root@127.0.0.1:3306/<project_name>
       SIMPLETEST_BASE_URL: http://localhost:8888
       PROJECT_ROOT: .
-      DRUPAL_ROOT: ./docroot
+      DRUPAL_ROOT: ./web
       PHP_VERSION: '8.1'
       MINK_DRIVER_ARGS: '["chrome", {"chromeOptions":{"args":["--disable-gpu", "--headless”]}}, "http://localhost:9515/wd/hub"]'
       MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", { "chromeOptions": { "w3c": false } }, "http://localhost:9515/wd/hub"]'
@@ -74,4 +74,4 @@ jobs:
       - name: Run PHPUnit Tests
         if: always()
         run: |
-          $(pwd)/vendor/bin/phpunit -c $(pwd)/docroot/core/phpunit.xml.dist --verbose --group=${{ env.MODULE }} $(pwd)/docroot/modules/contrib/${{ env.MODULE }}
+          $(pwd)/vendor/bin/phpunit -c $(pwd)/${{ env.DRUPAL_ROOT }}/core/phpunit.xml.dist --verbose --group=${{ env.MODULE }} $(pwd)/${{ env.DRUPAL_ROOT }}/modules/contrib/${{ env.MODULE }}
