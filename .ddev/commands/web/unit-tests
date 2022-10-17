@@ -3,4 +3,4 @@
 ## Usage: unit-tests
 ## Example: "ddev unit-tests"
 
-/var/www/html/vendor/bin/phpunit -c /var/www/html/docroot/core/phpunit.xml.dist --verbose --group=$PROJECT_NAME /var/www/html/docroot/modules/contrib/$PROJECT_NAME
+/var/www/html/vendor/bin/phpunit -c /var/www/html/$DDEV_DOCROOT/core/phpunit.xml.dist --verbose --group=$PROJECT_NAME /var/www/html/$DDEV_DOCROOT/modules/contrib/$PROJECT_NAME
