@@ -3,4 +3,4 @@
 ## Usage: coding-standards
 ## Example: "ddev coding-standards"
 
-/var/www/html/vendor/bin/phpcs -p docroot/modules/contrib/$PROJECT_NAME
+/var/www/html/vendor/bin/phpcs -p $DDEV_DOCROOT/modules/contrib/$PROJECT_NAME
