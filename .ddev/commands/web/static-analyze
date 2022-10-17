@@ -3,4 +3,4 @@
 ## Usage: static-analyze
 ## Example: "ddev static-analyze"
 
-/var/www/html/vendor/bin/phpstan analyze --memory-limit 1G docroot/modules/contrib/$PROJECT_NAME
+/var/www/html/vendor/bin/phpstan analyze --memory-limit 1G $DDEV_DOCROOT/modules/contrib/$PROJECT_NAME
