@@ -17,15 +17,15 @@
     "require": {
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
-        "drupal/core": "10.0.x-dev as 9.4",
-        "drupal/core-composer-scaffold": "10.0.x-dev as 9.4",
-        "drupal/core-recommended": "10.0.x-dev as 9.4",
+        "drupal/core": "9.5.x-dev",
+        "drupal/core-composer-scaffold": "9.5.x-dev",
+        "drupal/core-recommended": "9.5.x-dev",
         "drush/drush": "^11.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "wikimedia/composer-merge-plugin": "^2.0"
     },
     "require-dev": {
-        "drupal/core-dev": "10.0.x-dev as 9.4",
+        "drupal/core-dev": "9.5.x-dev",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/phpstan-deprecation-rules": "^1.0"
     },
