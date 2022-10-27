@@ -15,7 +15,7 @@ mutagen_enabled: false
 use_dns_when_possible: true
 composer_version: "2"
 web_environment:
-  - PROJECT_NAME=<project_machine_name>
+  - PROJECT_NAME=<project_name>
 
 # Key features of ddev's config.yaml:
 
