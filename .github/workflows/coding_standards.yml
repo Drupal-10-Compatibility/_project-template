@@ -14,14 +14,13 @@ jobs:
     env:
       MODULE: <project_name>
       COMPOSER_MEMORY_LIMIT: -1
-      # Note, the username, password, port and db match mysql service setup.
-      SIMPLETEST_DB: mysql://root:root@127.0.0.1:3306/<project_name>
-      SIMPLETEST_BASE_URL: http://localhost:8888
       PROJECT_ROOT: .
       DRUPAL_ROOT: ./web
-      PHP_VERSION: '8.1'
+      PHP_VERSION: '8.2'
     steps:
       - uses: actions/checkout@v2
+      - name: Shut down Ubuntu MySQL
+        run: sudo service mysql stop #shutdown default mysql, sudo is necessary
       - name: Set up php version ${{ env.PHP_VERSION }} 
         uses: shivammathur/setup-php@v2
         with:
