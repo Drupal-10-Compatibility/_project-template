@@ -20,6 +20,7 @@ jobs:
       PROJECT_ROOT: .
       DRUPAL_ROOT: ./web
       PHP_VERSION: '8.1'
+      NODE_VERSION: '20'
       MINK_DRIVER_ARGS: '["chrome", {"chromeOptions":{"args":["--disable-gpu", "--headless”]}}, "http://localhost:9515/wd/hub"]'
       MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", { "chromeOptions": { "w3c": false } }, "http://localhost:9515/wd/hub"]'
     steps:
@@ -38,6 +39,10 @@ jobs:
           extensions: date, dom, filter, gd, hash, json, mbstring, pcre, pdo, session, tokenizer, xml
           # Includes code coveage for phpunit, but disables xDebug
           coverage: pcov
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
       - name: Get Composer cache directory
         id: composercache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
