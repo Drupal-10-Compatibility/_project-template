@@ -1,11 +1,11 @@
-name: test_installation
+name: nightly_build
 
 # Run this workflow every time a new commit is pushed to the repo
 on:
   push:
-# The following will run on The 1st and 15th of every month at 1:30 UTC
+# The following will run nightly at 12:00am UTC
   schedule:
-    - cron: '30 1 1,15 * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:
 jobs:
   # This job will allow scheduling a job execution only if there have been commits
