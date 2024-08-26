@@ -1,0 +1,93 @@
+name: test_installation
+
+# Run this workflow every time a new commit is pushed to the repo
+on:
+  push:
+# The following will run on The 1st and 15th of every month at 1:30 UTC
+  schedule:
+    - cron: '30 1 1,15 * *'
+  workflow_dispatch:
+jobs:
+  # This job will allow scheduling a job execution only if there have been commits
+  # to a repository in the last 24 hours.
+  check_date:
+    runs-on: ubuntu-latest
+    name: Check latest commit
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: print latest_commit
+        run: echo ${{ github.sha }}
+      - id: should_run
+        continue-on-error: true
+        name: check latest commit is less than a day
+        if: ${{ github.event_name == 'schedule' }}
+        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
+  run-unit-tests:
+    name: Run Unit Tests
+    # The following two lines are used to trigger the job on a schedule ONLY if the
+    # criteria from check_date is met, i.e. there have been commits in the last 24 hours.
+    # Remove these two lines along with the check_date job above if this is not needed.
+    needs: check_date
+    if: ${{ needs.check_date.outputs.should_run != 'false' }}
+    runs-on:  ubuntu-latest
+    env:
+      MODULE: <project_name>
+      COMPOSER_MEMORY_LIMIT: -1
+      # Note, the username, password, port and db match mysql service setup.
+      SIMPLETEST_DB: mysql://root:root@127.0.0.1:3306/<project_name>
+      SIMPLETEST_BASE_URL: http://localhost:8888
+      PROJECT_ROOT: .
+      DRUPAL_ROOT: ./web
+      PHP_VERSION: '8.1'
+      PHP_EXTENSIONS: date, dom, filter, gd, hash, json, mbstring, pcre, pdo, session, tokenizer, xml, phar
+      NODE_VERSION: '20'
+      MINK_DRIVER_ARGS: '["chrome", {"chromeOptions":{"args":["--disable-gpu", "--headless”]}}, "http://localhost:9515/wd/hub"]'
+      MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", { "chromeOptions": { "w3c": false } }, "http://localhost:9515/wd/hub"]'
+    steps:
+      - name: Shut down Ubuntu MySQL
+        run: sudo service mysql stop #shutdown default mysql, sudo is necessary
+      - name: Set up MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql version: '5.7'
+          mysql database: ${{ env.MODULE }}
+          mysql root password: root
+      - name: Set up php version ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          # Includes code coveage for phpunit, but disables xDebug
+          coverage: pcov
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Get Composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+      # Create new drupal project with Composer install
+      - name: Install Drupal with Composer
+        run: composer update
+      # Install Drupal for phpunit tests
+      - name: Install Drupal site for phpunit testing
+        if: always()
+        run: |
+          echo ${{ env.SIMPLETEST_DB }}
+          $(pwd)/vendor/bin/drush site-install standard --yes --account-pass=admin --db-url=$SIMPLETEST_DB
+          $(pwd)/vendor/bin/drush en ${{env.MODULE}} --yes
+          $(pwd)/vendor/bin/drush config-set system.performance css.preprocess 0 --yes
+          $(pwd)/vendor/bin/drush config-set system.performance js.preprocess 0 --yes
+          $(pwd)/vendor/bin/drush config-set system.logging error_level all --yes
+      - name: Start HTTP server, check site for installation success
+        if: always()
+        run: $(pwd)/cicd/testsite.sh
