@@ -69,4 +69,5 @@ jobs:
           $(pwd)/vendor/bin/drush config-set system.logging error_level all --yes
       - name: Start HTTP server, check site for installation success
         if: always()
-        run: $(pwd)/cicd/testsite.sh
+        run: $(pwd)/cicd/testsite.sh ${{ env.SIMPLETEST_DB }}
+
